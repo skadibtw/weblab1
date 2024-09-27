@@ -110,6 +110,6 @@ public class Main {
     }
 
     private static boolean validateR(float r) {
-        return r >= 1 && r <= 5 && r % 1 == 0;
+        return r >= 1 && r <= 5;
     }
 }
