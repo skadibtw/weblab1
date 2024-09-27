@@ -1,8 +1,12 @@
+/* Общие стили */
 * {
     font-family: sans-serif;
+    color: black
 }
 
 html, body {
+    background: url('../media/background.jpg') no-repeat center center fixed; /* Путь к фоновому изображению */
+    background-size: cover;
     padding: 0;
     margin: 0;
 }
@@ -12,14 +16,14 @@ input[type="radio"] {
 }
 
 input[type="text"]:focus {
-    outline: none
+    outline: none;
 }
 
 .header {
     font-size: 16px;
     text-align: center;
-    color: rgb(255, 255, 255);
-    background-color: black;
+    color: white;
+    background-color: rgba(127, 144, 133, 0.5);
 }
 
 .header-container {
@@ -29,7 +33,9 @@ input[type="text"]:focus {
     height: 55px;
     width: calc(100% - 40px);
     margin: auto;
+
 }
+
 
 .main {
     display: grid;
@@ -38,18 +44,30 @@ input[type="text"]:focus {
     width: 100vw;
 }
 
-.main > div {
-    border: 1px solid rgb(0, 0, 0);
-}
+
 
 .main__left-column {
     display: grid;
     grid-template-rows: max-content max-content auto;
 }
 
+
 .main__block {
     margin: 15px 15px 0 15px;
-    border: 1px solid rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: black;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.6),
+    0 0 10px rgba(0, 255, 255, 0.6),
+    0 0 15px rgba(0, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+.main__block:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 255, 1),
+    0 0 20px rgba(0, 255, 255, 1),
+    0 0 30px rgba(0, 255, 255, 1);
 }
 
 .main__block .row {
@@ -61,51 +79,65 @@ input[type="text"]:focus {
     display: inline-block;
 }
 
-.graph  {
+/* Canvas */
+canvas {
     display: block;
-    height: 350px;
-    width: 350px;
-    margin: 20px auto;
+    height: 500px;
+    width: 500px;
+    margin: 0px auto;
 }
 
 #y-input {
     height: 18px;
     width: 323px;
     text-indent: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    outline: none;
 }
 
 .submit_button {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 16px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .submit_button:hover {
-    background-color: #f6f6f6;
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
 .submit_button:active {
-    background-color: #e6e3e3;
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
-.result-title {
-    margin: 10px auto;
-    text-align: center;
+table {
+    margin: 15px 15px 0 0;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
-.result-container {
-    display: grid;
-    text-align: center;
-    grid-template-columns: repeat(4, 1fr);
+th, td {
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-#result {
-    padding-bottom: 1px;
-    overflow-y: auto;
-    max-height: calc(100vh - 130px);
+th {
+    background-color: rgba(127, 144, 133, 0.4);
+    border-radius: 5px;
+    color: white;
 }
 
-.result-container > div {
-    padding: 5px;
-    box-shadow: 1px 1px #000000;
+tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.1);
 }

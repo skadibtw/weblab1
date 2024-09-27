@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Лабораторная работа №1</title>
     <link rel="stylesheet" href="css/index.css">
-    <link rel="icon" type="image/jpg" href="media/favicon.ico">
+    <link rel="icon" type="image/jpg" href="media/icon.png">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
     <main class="main">
         <div class="main__left-column">
             <div class="main__block">
-                <img class="graph" src = "media/graph.svg"/>
+                <canvas id="canvas" width="500" height="500"></canvas>
             </div>
             <div class="main__block">
                 <div class="row">Параметры</div>
@@ -51,60 +51,29 @@
             </div>
             <button class="main__block submit_button" style="margin-bottom: 15px;" id="submit">Проверить</button>
         </div>
+
         <div>
-            <div class="result-title">Результат</div>
-            <div class="result-container">
-                <div style="border-top: 1px solid #000000;">X</div>
-                <div style="border-top: 1px solid #000000;">Y</div>
-                <div style="border-top: 1px solid #000000;">R</div>
-                <div style="border-top: 1px solid #000000;">Попал?</div>
+            <div class="table-container">
+                <table id="result-table">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>R</th>
+                        <th>Результат</th>
+                        <th>Текущее время</th>
+                        <th>Время выполнения</th>
+                    </tr>
+                    </thead>
+                    <tbody id="result-body">
+                    </tbody>
+                </table>
             </div>
-            <div class="result-container" id="result"></div>
         </div>
     </main>
+
 </div>
-<script>
-    $("input[type='checkbox']").on("change", function() {
-        $("input[name='" + this.name + "']").not(this).prop("checked", false);
-    });
-
-    $("#submit").on("click", function() {
-        let jsonData = {
-            "x": $("input[name='x-value']:checked").val(),
-            "y": $("input[name='y-value']").val(),
-            "r": $("input[name='r-value']:checked").val()
-        };
-
-        if (isNaN(+jsonData.x) || isNaN(+jsonData.y) || isNaN(+jsonData.r) || +jsonData.y < -5 || +jsonData.y > 3) {
-            alert("Некорректные данные");
-            return;
-        }
-
-        $.ajax({
-            url: "/fcgi-bin/?" + $.param(jsonData),
-            type: "GET",
-            dataType: "json",
-            success: function(response) {
-                if (response.error != null) {
-                    alert("Ответ от сервера не получен");
-                    console.log(response);
-                } else {
-                    if (response.result) {
-                        $("#result").prepend($("<div></div>").text("Да"));
-                    } else {
-                        $("#result").prepend($("<div></div>").text("Нет"));
-                    }
-                    $("#result").prepend($("<div></div>").text(jsonData.r));
-                    $("#result").prepend($("<div></div>").text(jsonData.y));
-                    $("#result").prepend($("<div></div>").text(jsonData.x));
-                }
-            },
-            error: function(xhr, status, error) {
-                alert(error)
-            }
-        });
-    })
-</script>
+<script src="js/script.js"></script>
+<script src="js/canvas.js"></script>
 </body>
-
 </html>
