@@ -1,11 +1,6 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,9 +19,7 @@ public class JsonProcessing {
             %s""";
 
     public static HashMap<String, String> parseJsonBody(String body) {
-        log.info("before");
         ObjectMapper mapper = new ObjectMapper();
-        log.info("after");
         try {
             return mapper.readValue(body, new TypeReference<HashMap<String, String>>() {
             });
@@ -34,8 +27,6 @@ public class JsonProcessing {
         catch (JsonProcessingException e) {
             log.info(e.getMessage());
         }
-//        HashMap<String, String> map = gson.fromJson(body, type);
-//        log.info("parsed " + map.toString());
         HashMap<String, String> map = new HashMap<>();
         return map;
     }

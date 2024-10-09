@@ -1,9 +1,8 @@
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import com.fastcgi.FCGIInterface;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 public class Main {
 
@@ -11,11 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-            log.info("in main function!");
-
             while (new FCGIInterface().FCGIaccept() >= 0) {
-                log.info("in while loop");
-
 
                 long startTime = System.currentTimeMillis(); // Track start time
                 try {
@@ -41,30 +36,29 @@ public class Main {
 
 
                         // Parse the request body (assumed to be JSON)
-                        HashMap<String, String> params = JsonProcessing.parseJsonBody(requestBody);
-                        log.info("Parsed params: " + params);
+                            HashMap<String, String> params = JsonProcessing.parseJsonBody(requestBody);
 
 
-                        // Extract x, y, and r from params
-                        double x = Double.parseDouble(params.get("x"));
-                        double y = Double.parseDouble(params.get("y"));
-                        double r = Double.parseDouble(params.get("r"));
+                            // Extract x, y, and r from params
+                            double x = Double.parseDouble(params.get("x"));
+                            double y = Double.parseDouble(params.get("y"));
+                            double r = Double.parseDouble(params.get("r"));
 
-                        // Validate data
-                        String responseJson;
-                        if (Validate.validateX(x) && Validate.validateY(y) && Validate.validateR(r)) {
-                            log.info("Valid x y r, sending...");
-                            boolean hit = Validate.check(x, y, r);
-                            responseJson = String.format("{\"hit\": %b}", hit);
-                            log.info("Result sent");
+                            // Validate data
+                            String responseJson;
+                            if (Validate.validateX(x) && Validate.validateY(y) && Validate.validateR(r)) {
+                                boolean hit = Validate.check(x, y, r);
+                                responseJson = String.format("{\"hit\": %b}", hit);
+                                log.info("Result sent");
 
-                        } else {
-                            responseJson = "{\"error\": \"Invalid data\"}";
-                            log.info("Error sent");
+                            } else {
+                                responseJson = "{\"error\": \"Invalid data\"}";
+                                log.info("Error sent");
 
-                        }
+                            }
 
-                        JsonProcessing.sendJson(startTime, responseJson);
+                            JsonProcessing.sendJson(startTime, responseJson);
+
                     } else {
                         JsonProcessing.sendJson(startTime, "{\"error\": \"No data received\"}");
                     }
