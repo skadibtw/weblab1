@@ -1,10 +1,26 @@
+function showToast(message) {
+    const toast = document.getElementById("toast");
+
+    // Устанавливаем сообщение
+    toast.textContent = message;
+
+    // Добавляем класс для показа тоста
+    toast.classList.add("show");
+
+    // Через 3 секунды скрываем тост
+    setTimeout(function() {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("submit").addEventListener("click", function(event) {
     event.preventDefault();
 
     // Get X
     const xSelect = document.querySelector('input[name="x-value"]:checked');
     if (!xSelect) {
-        alert("Выберите значение X.");
+        showToast("Выберите значение X.");
         return;
     }
 
@@ -14,13 +30,13 @@ document.getElementById("submit").addEventListener("click", function(event) {
     // Get R
     const rSelect = document.querySelector('input[name="r-value"]:checked');
     if (!rSelect) {
-        alert("Выберите значение R.");
+        showToast("Выберите значение R.");
         return;
     }
 
     // Validate Y
     if (!isValidY(yInput)) {
-        alert("Неверное значение Y. Оно должно быть числом от -3 до 3.");
+        showToast("Неверное значение Y. Оно должно быть числом от -3 до 3, а число знаков после запятой не должно превышать 10");
         return;
     }
 
@@ -48,8 +64,7 @@ document.getElementById("submit").addEventListener("click", function(event) {
             return resp.json(); // turn answ to json
         })
         .then(result => {
-            console.log('Результат: ' + JSON.stringify(result, null, 2));
-            addResultToTable(x, y, r, result.response.hit, result.currentTime, result.elapsedTime);
+            addResultToTable(x, y, r, JSON.parse(result.response).hit, result.currentTime, result.elapsedTime);
         })
         .catch(error => {
             console.error("Произошла ошибка:", error);
@@ -91,4 +106,4 @@ function addResultToTable(x, y, r, hit, currentTime, elapsedTime) {
     newRow.appendChild(elapsedTimeCell);
 
     resultBody.appendChild(newRow);
-}
+}});
