@@ -101,7 +101,6 @@ canvas {
     background-color: rgba(255, 255, 255, 0.2);
     cursor: pointer;
     font-size: 16px;
-    color: white;
     border: 1px solid rgba(255, 255, 255, 0.5);
     padding: 10px;
     border-radius: 5px;
@@ -112,6 +111,22 @@ canvas {
 }
 
 .submit_button:active {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+.clear_button {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px
+}
+.clear_button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.clear_button:active {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -159,7 +174,6 @@ tbody tr:nth-child(odd) {
     transition: opacity 0.5s, visibility 0.5s;
 }
 
-/* Показываем тост */
 .toast.show {
     visibility: visible;
     opacity: 1;

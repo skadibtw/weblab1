@@ -1,19 +1,17 @@
 function showToast(message) {
     const toast = document.getElementById("toast");
 
-    // Устанавливаем сообщение
     toast.textContent = message;
 
-    // Добавляем класс для показа тоста
     toast.classList.add("show");
 
-    // Через 3 секунды скрываем тост
     setTimeout(function() {
         toast.classList.remove("show");
     }, 3000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    loadResults();
 document.getElementById("submit").addEventListener("click", function(event) {
     event.preventDefault();
 
@@ -64,19 +62,30 @@ document.getElementById("submit").addEventListener("click", function(event) {
             return resp.json(); // turn answ to json
         })
         .then(result => {
+            saveResults(x, y, r, JSON.parse(result.response).hit, result.currentTime, result.elapsedTime);
             addResultToTable(x, y, r, JSON.parse(result.response).hit, result.currentTime, result.elapsedTime);
         })
         .catch(error => {
             console.error("Произошла ошибка:", error);
         });
+
 });
 
-function isValidY(value) {
+    document.getElementById("clearResults").addEventListener("click", function() {
+        clearResults();
+        document.getElementById("result-body").innerHTML = ""; // Очистить таблицу
+        showToast("Результаты очищены.");
+    });
+
+
+
+    function isValidY(value) {
     const y = parseFloat(value);
     return !isNaN(y) && y >= -3 && y <= 3;
 }
 //get results from response and add to table
 function addResultToTable(x, y, r, hit, currentTime, elapsedTime) {
+
     const resultBody = document.getElementById("result-body");
     const newRow = document.createElement("tr");
 
@@ -106,4 +115,24 @@ function addResultToTable(x, y, r, hit, currentTime, elapsedTime) {
     newRow.appendChild(elapsedTimeCell);
 
     resultBody.appendChild(newRow);
-}});
+}
+    function saveResults(x, y, r, hit, currentTime, elapsedTime) {
+        const storedResults = JSON.parse(localStorage.getItem('results')) || [];
+        storedResults.push({ x, y, r, hit, currentTime, elapsedTime });
+        localStorage.setItem('results', JSON.stringify(storedResults));
+    }
+
+    function loadResults() {
+        const storedResults = JSON.parse(localStorage.getItem('results'));
+        if (storedResults) {
+            storedResults.forEach(result => {
+                addResultToTable(result.x, result.y, result.r, result.hit, result.currentTime, result.elapsedTime);
+            });
+        }
+    }
+
+    function clearResults() {
+        localStorage.removeItem('results'); // Удаляем результаты из localStorage
+        document.getElementById("result-body").innerHTML = ""; // Очищаем таблицу
+    }});
+
