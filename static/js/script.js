@@ -7,6 +7,7 @@ function showToast(message) {
 
     setTimeout(function() {
         toast.classList.remove("show");
+        toast.textContent = "";
     }, 3000);
 }
 
@@ -23,7 +24,7 @@ document.getElementById("submit").addEventListener("click", function(event) {
     }
 
     // Get Y
-    const yInput = document.getElementById("y-input").value;
+    const yInput = document.getElementById("y-input").value.replace(",", ".");
 
     // Get R
     const rSelect = document.querySelector('input[name="r-value"]:checked');
@@ -77,12 +78,13 @@ document.getElementById("submit").addEventListener("click", function(event) {
         showToast("Результаты очищены.");
     });
 
-
-
     function isValidY(value) {
     const y = parseFloat(value);
     return !isNaN(y) && y >= -3 && y <= 3;
 }
+
+
+
 //get results from response and add to table
 function addResultToTable(x, y, r, hit, currentTime, elapsedTime) {
 

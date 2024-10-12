@@ -11,8 +11,16 @@ import java.util.logging.Logger;
 
 public class JsonProcessing {
     private static final Logger log = Logger.getLogger(JsonProcessing.class.getName());
-    private static final String RESPONSE_TEMPLATE = """
+
+    private static final String RESPONSE_TEMPLATE_OK = """
             HTTP/1.1 200 OK
+            Content-Type: application/json
+            Content-Length: %d
+            
+            %s""";
+
+    private static final String RESPONSE_TEMPLATE_FAIL = """
+            HTTP/1.1 500 Internal Server Error
             Content-Type: application/json
             Content-Length: %d
             
@@ -45,12 +53,21 @@ public class JsonProcessing {
             String json = new ObjectMapper().writeValueAsString(map);
             log.info(json);
             int jsonLengthInBytes = json.getBytes(StandardCharsets.UTF_8).length;
-            System.out.printf((RESPONSE_TEMPLATE) + "%n", jsonLengthInBytes, json);
+            System.out.printf((RESPONSE_TEMPLATE_OK) + "%n", jsonLengthInBytes, json);
         }
         catch (JsonProcessingException e) {
             log.info(e.getMessage());
         }
 
+    }
+    public static void sendError(String errorMessage) {
+        try {
+        String json = new ObjectMapper().writeValueAsString(errorMessage);
+        System.out.printf((RESPONSE_TEMPLATE_FAIL) + "%n", json.getBytes(StandardCharsets.UTF_8).length, json);
+        }
+        catch(Exception e) {
+            log.info(e.getMessage());
+        }
     }
 }
 

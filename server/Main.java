@@ -27,7 +27,7 @@ public class Main {
 
                         if (bytesRead == -1) {
                             log.info("No data in POST request body.");
-                            JsonProcessing.sendJson(startTime, "{\"error\": \"No data received\"}");
+                            JsonProcessing.sendError("{\"error\": \"No data received\"}");
                             continue;
                         }
 
@@ -60,10 +60,10 @@ public class Main {
                             JsonProcessing.sendJson(startTime, responseJson);
 
                     } else {
-                        JsonProcessing.sendJson(startTime, "{\"error\": \"No data received\"}");
+                        JsonProcessing.sendError("{\"error\": \"No data received\"}");
                     }
                 } catch (Exception e) {
-                    JsonProcessing.sendJson(startTime, String.format("{\"error\": \"%s\"}", e));
+                    JsonProcessing.sendError(String.format("{\"error\": \"%s\"}", e));
                 }
             }
 

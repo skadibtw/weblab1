@@ -3,14 +3,14 @@ public class Validate {
         return square(x, y, r) || circle(x, y, r) || triangle(x, y, r);
     }
     private static boolean circle(double x, double y, double r) {
-        return (x >= 0 && y >= 0 && x <= r/2 && y <= r/2 && (Math.pow(x, 2) + Math.pow(y, 2) - Math.pow(r, 2) <= 0));
+        return (x >= 0 && y >= 0 && x <= r/2 && y <= r/2 && (Math.pow(x, 2) + Math.pow(y, 2) - Math.pow(r/2, 2) <= 0));
     }
     private static boolean square(double x, double y, double r) {
         return  (x >= 0 && y <= 0 && x <= r && y >= -r);
     }
 
     private static boolean triangle(double x, double y, double r) {
-        return (x <= 0 && y <= 0 && x >= -r && y >= (-r / 2) && Math.abs(x) + Math.abs(y) - Math.abs(r) < 0);
+        return (x <= 0 && y <= 0 && x >= -r && y >= (-r / 2) && y >= (-1/2d * x) - (r / 2));
     }
     // Validation methods
     public static boolean validateX(double x) {
